@@ -11,13 +11,31 @@ function yellow_echo() {
     echo -e "\e[1;33m$*\e[m";
 }
 
+# echo(文字レッド)
+function red_echo() {
+    echo -e "\e[1;31m$*\e[m";
+}
+
 ### main Area
 # shの位置を保存
 SH_DIR=`pwd`
 
+# シナリオExcelのリストを書き出すパスを取得(パス指定ファイルには相対パスを指定する)
+OUTPUT_LIST_TXT_PATH=`head -1 ./OUTPUT_LIST_TXT_PATH.txt | xargs -I{} cygpath -w \`pwd\`/{}`
+
+# シナリオExcelが置かれているパスを取得(パス指定ファイルには絶対パスを指定する)
+SEANARIO_EXCEL_PATH=`head -1 ./SEANARIO_EXCEL_PATH.txt`
+
 # java実行 エクセルのシート一覧を取得する
-cd ../../
-#mvn clean package -Dtest=test.jp.co.daich.selenium.logic.GetScenarioListTest
+cd ../../makeSeanarioList/target
+echo "java -jar upSeanarioLit-jar-with-dependencies.jar $OUTPUT_LIST_TXT_PATH $SEANARIO_EXCEL_PATH"
+java -jar upSeanarioLit-jar-with-dependencies.jar $OUTPUT_LIST_TXT_PATH $SEANARIO_EXCEL_PATH
+JAVA_SYSTEM_EXIT=$?
+
+if [ $JAVA_SYSTEM_EXIT = 0 ]; then
+    red_echo "シナリオExcelのリストアップ用jarの実行結果が異常です。有識者に連絡ください。"
+    exit
+fi
 
 # shの位置に戻る
 cd $SH_DIR

@@ -1,40 +1,50 @@
-package seanarioreader;
+package com.github.daich.makeSeanarioList;
 
+import com.github.daich.makeSeanarioList.util.MyArrayUtil;
+import com.github.daich.makeSeanarioList.util.file.finder.MyExcelFinder;
+import com.github.daich.makeSeanarioList.util.file.reader.MyExcelReader;
+import com.github.daich.makeSeanarioList.util.file.writer.MyFileWriter;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import seanarioreader.util.ArrayUtil;
-import seanarioreader.util.file.finder.MyExcelFinder;
-import seanarioreader.util.file.reader.MyExcelReader;
-import seanarioreader.util.file.writer.MyFileWriter;
 
 /**
  *
  * @author USER
  */
-public class SeanarioReader {
+public class SeanarioListMaker {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // java引数チェック
-        assertArgs(args);
-        // java引数1；シナリオリストの出力先指定
-        final String puttingListTxtPath = args[0]; // TODO: 後で決める
-        // java引数2；読み取るシナリオが置かれている場所
-        final String seanariosPath = args[1]; // "C:\\netbeans\\projects\\fg-bookie\\designDoc\\01_DB設計\\entity"
+        try {
+            // java引数チェック
+            assertArgs(args);
+            // java引数1；シナリオリストの出力先指定
+            final String puttingListTxtPath = args[0]; // TODO: 後で決める
+            // java引数2；読み取るシナリオが置かれている場所
+            final String seanariosPath = args[1]; // "C:\\netbeans\\projects\\fg-bookie\\designDoc\\01_DB設計\\entity"
 
-        // 指定したPathに存在するブック情報をMap形式で取得
-        // Mapのキー：ブック名
-        // Mapのバリュー：シート名のリスト
-        Map<String, List<String>> excelBooks = getSeanarioList(seanariosPath);
+            // 指定したPathに存在するブック情報をMap形式で取得
+            // Mapのキー：ブック名
+            // Mapのバリュー：シート名のリスト
+            Map<String, List<String>> excelBooks = getSeanarioList(seanariosPath);
 
-        // シナリオリストをファイルに書き出す
-        MyFileWriter.write(puttingListTxtPath,
-                // Map情報を元にシナリオリストのテキスト内容を構築する
-                buildSeanarioListTxt(excelBooks));
+            // シナリオリストをファイルに書き出す
+            MyFileWriter.write(puttingListTxtPath,
+                    // Map情報を元にシナリオリストのテキスト内容を構築する
+                    buildSeanarioListTxt(excelBooks));
+
+        } // 何らかのエラーが発生した場合
+        catch (Exception e) {
+            e.printStackTrace();
+            // システム結果コード：0（異常終了）を設定する
+            System.exit(0);
+        }
+        // システム結果コード：1（正常終了）を設定する
+        System.exit(1);
     }
 
     /**
@@ -49,8 +59,8 @@ public class SeanarioReader {
             throw new RuntimeException("java引数の数が想定外。[想定] " + expect_argsAmount + "[実際] " + args.length);
         }
         // 引数の各要素の空チェック
-        if (ArrayUtil.isAnyoneEmpty(args)) {
-            throw new RuntimeException("java引数のいずれかが空。");
+        if (MyArrayUtil.isAnyoneEmpty(args)) {
+            throw new RuntimeException("java引数のいずれかが空。\n" + MyArrayUtil.toString(args));
         }
     }
 

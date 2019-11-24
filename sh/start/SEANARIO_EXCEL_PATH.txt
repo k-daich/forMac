@@ -1,0 +1,1 @@
+C:\\netbeans\\projects\\fg-bookie\\designDoc\\01_DB設計\\entity

@@ -1,4 +1,4 @@
-package seanarioreader.util.file.finder;
+package com.github.daich.makeSeanarioList.util.file.finder;
 
 import java.io.File;
 import java.util.ArrayList;

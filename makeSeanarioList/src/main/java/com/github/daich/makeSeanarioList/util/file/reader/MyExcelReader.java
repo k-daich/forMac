@@ -1,4 +1,4 @@
-package seanarioreader.util.file.reader;
+package com.github.daich.makeSeanarioList.util.file.reader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -47,7 +51,7 @@ public class MyExcelReader {
      * @param file
      * @return workbook
      */
-    private static List<String> getWorkBook(File file) {
+    private static Workbook getWorkBook(File file) {
         try {
             // java.io.Fileから
             return WorkbookFactory.create(new FileInputStream(file));
