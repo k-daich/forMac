@@ -1,0 +1,27 @@
+[Book]  01_seq.xlsx
+    1   シーケンス定義書（一覧）
+    2   GUEST_USERID_SEQ
+    3   template
+
+[Book]  01_SEQ定義書.xlsx
+    4   シーケンス定義書（一覧）
+    5   GUEST_USERID_SEQ
+    6   template
+
+[Book]  02_TBL定義書_03_M_TOURNAMENT_INFO.xlsx
+    7   テーブル定義書
+    8   投入データ作成
+    9   hbm.xml
+    10   CREATE文
+
+[Book]  02_TBL定義書_02_M_MATCH_INFO.xlsx
+    11   テーブル定義書（テンプレート）
+    12   CREATE文
+    13   hbm.xml
+
+[Book]  02_TBL定義書_01_T_USER_NEW.xlsx
+    14   テーブル定義書（テンプレート）
+    15   hbm.xml
+    16   CREATE文
+    17   SELECT文
+
