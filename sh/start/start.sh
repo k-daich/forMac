@@ -1,11 +1,6 @@
 #!/bin/bash
 
 ### function Area
-# echo(背景マゼンタ)
-function bg_magenta_echo() {
-    echo -e "\e[45m$*\e[m";
-}
-
 # echo(文字イエロー)
 function yellow_echo() {
     echo -e "\e[1;33m$*\e[m";
@@ -14,6 +9,14 @@ function yellow_echo() {
 # echo(文字レッド)
 function red_echo() {
     echo -e "\e[1;31m$*\e[m";
+}
+
+# sed(背景マゼンタ)
+# 引数1: 対象ファイル名
+# 引数2: 色付け対象キーワード
+function bg_magenta_sed() {
+	echo $2
+    sed "s/\($2\)/\o033[45m\1\o033[m/g" $1
 }
 
 ### main Area
@@ -41,19 +44,7 @@ fi
 cd $SH_DIR
 
 # javaで生成したエクセルのシート一覧をターミナルに表示
-cat ./temp/scenarioList.txt | while read line
-do
-    # grepを使ってBook行なのかSheet行なのか判定
-    echo -e "$line" | grep "^\[Book\]" >/dev/null
-    if [[ $? == 0 ]];
-    # Bookの場合
-    then
-        bg_magenta_echo $line
-    # Sheetの場合
-    else
-        echo "    "$line
-    fi
-done
+bg_magenta_sed ./temp/scenarioList.txt '^\[Book\].*'
 
 # 実行するシートを選んでもらう
 echo -n "実行したいシート名のNoを入力してください。"
