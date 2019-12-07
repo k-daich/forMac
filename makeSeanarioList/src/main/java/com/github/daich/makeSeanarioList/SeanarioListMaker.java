@@ -76,11 +76,11 @@ public class SeanarioListMaker {
 
         // ブック単位に繰り返し
         for (String bookName : excelBooks.keySet()) {
-            System.out.println("FileWrite for bookName -> " + bookName);
+//            System.out.println("FileWrite for bookName -> " + bookName);
             sBuilder.append("[Book] ").append(bookName).append("\n");
             // シート単位に繰り返し
             for (String sheetName : excelBooks.get(bookName)) {
-                System.out.println("FileWrite for sheetName -> " + bookName);
+//                System.out.println("FileWrite for sheetName -> " + bookName);
                 sBuilder.append("    ").append(listIndex++).append("   ").append(sheetName).append("\n");
             }
             sBuilder.append("\n");
@@ -103,7 +103,7 @@ public class SeanarioListMaker {
 
         // ブック単位に繰り返す
         files.forEach((file) -> {
-            System.out.println("file Name : " + file.getName());
+//            System.out.println("file Name : " + file.getName());
             // ファイル名×シート名リストでMapに格納する
             excelBooks.put(file.getName(), MyExcelReader.getSheetNames(file));
         });

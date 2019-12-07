@@ -28,16 +28,16 @@ public class MyExcelFinder {
         File[] files = dir.listFiles();
 
         for (File file : files) {
-            System.out.println("find FileName :" + file.getName());
+//            System.out.println("find FileName :" + file.getName());
             // ファイルであるか、かつエクセルファイルであるか
             if (file.isFile()
                     && isExcel(file)) {
-                System.out.println("〇 it is Excel File :" + file.getName());
+//                System.out.println("〇 it is Excel File :" + file.getName());
                 // エクセルファイルであればファイル一覧に追加する
                 excelFileList.add(file);
             }
             else {
-                System.out.println("× it is not Excel File :" + file.getName());
+//                System.out.println("× it is not Excel File :" + file.getName());
             }
         }
         return excelFileList;
