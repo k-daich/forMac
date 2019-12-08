@@ -36,6 +36,7 @@ function set_basicAuthInfo() {
 
 # Basic認証を標準入力情報をもとに設定する
 function set_basicAuth() {
+    SQUID_CONF_PATH="/cygdrive/c/work/tools/Squid/etc/squid/squid.conf"
     yellow_echo -n "試験対象のドメインを入力ください。プロトコルやポートは不要。 (例：google.com)"
     read -p " > " INP_DOMAIN
     yellow_echo -n "Basic認証のユーザ名を入力ください。"
@@ -43,11 +44,15 @@ function set_basicAuth() {
     yellow_echo -n "Basic認証のパスワードを入力ください。"
     read -p " > " INP_PSWD
 
-    BASE64_ENC_STRING=`echo $INP_USER_NAME:INP_PSWD | base64`
-    # echo $BASE64_ENC_STRING
-    BASIC_AUTH_STRING="request_header_add Authorization \"Basic $BASE64_ENC_STRING\" test_site #replace by shell"
+    # sed テスト対象のドメイン定義を設定
+    sed "s/^acl test_site dstdomain .*#replace by shell/acl test_site dstdomain ${INP_DOMAIN} #replace by shell/" $SQUID_CONF_PATH
+
+    # HTTPヘッダ[Authorization]の付与
+    BASE64_ENC_STRING=`echo ${INP_USER_NAME}:${INP_PSWD} | base64`
+     echo $BASE64_ENC_STRING
+#    BASIC_AUTH_STRING="request_header_add Authorization \"Basic ${BASE64_ENC_STRING}\" test_site #replace by shell"
     
-    sed -e "s/^request_header_add Authorization.*test_site #replace by shell/${BASIC_AUTH_STRING}/" /cygdrive/c/work/tools/Squid/etc/squid/squid.conf
+    sed -e "s/^request_header_add Authorization.*test_site #replace by shell/request_header_add Authorization \"Basic ${BASE64_ENC_STRING}\" test_site #replace by shell/" ${SQUID_CONF_PATH}
 }
 
 # エクセルを読取り、セレニウムシナリオのリストを作成する
